@@ -1,0 +1,8 @@
+notebook
+scikit-learn
+matplotlib
+seaborn
+pandas
+tensorflow
+catboost
+spacy
