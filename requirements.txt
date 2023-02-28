@@ -7,3 +7,4 @@ tensorflow
 catboost
 spacy
 joblib
+numdifftools 
