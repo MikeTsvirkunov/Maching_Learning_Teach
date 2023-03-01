@@ -1,8 +1,7 @@
 import unittest
-from unittest import mock
 from Classes.Regression import Regression
 from Classes.RegressionTrainer import RegressionTrainer
-from Functions.errorFunctions import euclideError, euclideErrorGradient
+from Functions.lossFunctions import euclideError, euclideErrorGradient
 from Classes.Polinomizer import Polinomizer
 from Functions.gradientDescentAlgorithm import gradientDescentAlgorithm
 import numpy as np

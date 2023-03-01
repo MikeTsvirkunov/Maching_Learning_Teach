@@ -1,5 +1,5 @@
 import numpy as np
-import numdifftools as nd
+# import numdifftools as nd
 
 # dfun = nd.Gradient(lambda a: np.sum(lost_function(td, cd, a)))
 
