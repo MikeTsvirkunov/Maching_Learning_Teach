@@ -18,4 +18,4 @@ def MAPE(predicted, real):
 
 
 def R2(predicted, real):
-    return 1 - MSE(predicted, real) / (MSE(0, real - np.mean(real))) * np.mean(real)
+    return 1 - (MSE(predicted, real) / np.sum((real - np.mean(real))**2))
