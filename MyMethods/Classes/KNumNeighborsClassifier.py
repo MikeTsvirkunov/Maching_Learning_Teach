@@ -15,5 +15,5 @@ class KNumNeighborsClassifier:
             distances = self.distance(j, self.X_train)
             classes = self.y_train[np.argsort(distances)[:self.k]]
             k.append(self.function_of_priority(list(zip(classes, distances))))
-        return k
+        return np.array(k)
 

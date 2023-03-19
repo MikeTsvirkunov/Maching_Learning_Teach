@@ -14,7 +14,7 @@ class NaiveBayesianClassificator:
         k_false = list()
         p_true = sum(self.y_train) / self.y_train.shape[0]
         p_false = 1 - p_true
-        print(p_true, p_false)
+        # print(p_true, p_false)
         for j in x:
             z_true = list()
             z_false = list()
@@ -24,12 +24,5 @@ class NaiveBayesianClassificator:
                 z_false.append(func(value, train_values_false))
             k_false.append(np.prod(np.array(z_false).T) * p_false)
             k_true.append(np.prod(np.array(z_true).T) * p_true)
-
-            # for value, func, train_values in zip(j, self.spreading_functions, self.X_train[self.y_train == False].T):
-            #     z_false.append(func(value, train_values))
-            # k_false.append(np.prod(np.array(z_false).T) * p_false)
-        
-        # print(np.array(k_true))
-        # print(np.array(k_false))
         return self.function_of_priority(np.array(k_true) - np.array(k_false))
 
