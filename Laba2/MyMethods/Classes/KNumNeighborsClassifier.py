@@ -1,10 +1,19 @@
+import numpy as np
+
+
 class KNumNeighborsClassifier:
-    def __init__(self, k, distance) -> None:
+    def __init__(self, k, distance, function_of_priority) -> None:
         self.k = k
         self.distance = distance
-        self.known_objects = list()
+        self.function_of_priority = function_of_priority
+        self.X_train = None
+        self.y_train = None
     
     def predict(self, x):
-        for i in x:
-            nearest_neighbors = sorted(self.known_objects, key=lambda a: self.distance(i, a[1]))[0:self.k]
-        return nearest_neighbors
+        k = list()
+        for j in x:
+            distances = self.distance(j, self.X_train)
+            classes = self.y_train[np.argsort(distances)[:self.k]]
+            k.append(self.function_of_priority(list(zip(classes, distances))))
+        return k
+
