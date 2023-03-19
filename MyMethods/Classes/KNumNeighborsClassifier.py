@@ -1,7 +1,8 @@
 import numpy as np
+from .Interfaces.IPredictor import IPredictor
 
 
-class KNumNeighborsClassifier:
+class KNumNeighborsClassifier(IPredictor):
     def __init__(self, k, distance, function_of_priority) -> None:
         self.k = k
         self.distance = distance
@@ -9,7 +10,7 @@ class KNumNeighborsClassifier:
         self.X_train = None
         self.y_train = None
     
-    def predict(self, x):
+    def predict(self, x: np.array):
         k = list()
         for j in x:
             distances = self.distance(j, self.X_train)

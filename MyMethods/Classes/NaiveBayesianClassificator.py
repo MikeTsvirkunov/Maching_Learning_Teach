@@ -1,20 +1,20 @@
 import numpy as np
-from collections import Counter
+from .Interfaces.IPredictor import IPredictor
 
 
-class NaiveBayesianClassificator:
+class NaiveBayesianClassificator(IPredictor):
     def __init__(self, function_of_priority) -> None:
         self.function_of_priority = function_of_priority
         self.X_train = None
         self.y_train = None
         self.spreading_functions = None
+        # self.spreading_functions = spreading_functions
     
     def predict(self, x) -> np.array:
         k_true = list()
         k_false = list()
         p_true = sum(self.y_train) / self.y_train.shape[0]
         p_false = 1 - p_true
-        # print(p_true, p_false)
         for j in x:
             z_true = list()
             z_false = list()
