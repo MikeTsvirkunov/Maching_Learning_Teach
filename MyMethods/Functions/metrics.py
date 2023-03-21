@@ -28,3 +28,7 @@ def precision(y_predicted, y_test):
 
 def recall(y_predicted, y_test):
     return TruePositive(y_predicted, y_test) / (TruePositive(y_predicted, y_test) + FalseNegative(y_predicted, y_test))
+
+
+def f1(y_predicted, y_test):
+    return 2 * precision(y_predicted, y_test) * recall(y_predicted, y_test) / (precision(y_predicted, y_test) + recall(y_predicted, y_test))

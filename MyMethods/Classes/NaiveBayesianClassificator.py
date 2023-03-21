@@ -8,7 +8,6 @@ class NaiveBayesianClassificator(IPredictor):
         self.X_train = None
         self.y_train = None
         self.spreading_functions = None
-        # self.spreading_functions = spreading_functions
     
     def predict(self, x) -> np.array:
         k_true = list()
