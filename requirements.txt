@@ -6,4 +6,6 @@ pandas
 tensorflow
 catboost
 spacy
+joblib
+numdifftools
 imbalanced-learn
