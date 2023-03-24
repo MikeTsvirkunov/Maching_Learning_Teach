@@ -7,4 +7,5 @@ tensorflow
 catboost
 spacy
 joblib
-numdifftools 
+imbalanced-learn
+numdifftools
