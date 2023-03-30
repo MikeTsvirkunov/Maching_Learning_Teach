@@ -8,6 +8,9 @@ class Node(INode):
         self.__nexts = nexts
         self.__function_of_next = function_of_next
     
+    def set_next(self, param: any, next: any):
+        self.__nexts[param] = next
+
     def next(self, x: any) -> any:
         return self.__nexts[self.__function_of_next(x)]
 
