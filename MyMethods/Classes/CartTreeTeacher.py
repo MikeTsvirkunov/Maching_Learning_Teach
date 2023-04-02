@@ -3,31 +3,37 @@ from numpy import array
 from .Interfaces.ITeacher import ITeacher
 from .CartTreeClassifier import CartTreeClassifier
 from .Node import Node
+# from .NodeConteiner import NodeContainer
 
 
 class CartTreeTeacher(ITeacher):
-    def __init__(self, cart_tree_classifier: CartTreeClassifier, 
-                 function_of_split: callable) -> None:
+    def __init__(self, 
+                 cart_tree_classifier: CartTreeClassifier, 
+                 function_of_split: callable, 
+                 function_of_searching_of_split: callable,
+                 tree_size: int=-1) -> None:
         super().__init__()
         self.__cart_tree_classifier = cart_tree_classifier
         self.__function_of_split = function_of_split
+        self.__function_of_searching_of_split = function_of_searching_of_split
+        self.__tree_size = tree_size
+
+    def __creation_of_tree(self, now_node: Node, x: np.array, y: np.array, count: int):
+        f = lambda a :self.__function_of_split(a, self.__function_of_searching_of_split(x, y))
+        true_node = Node({True: None, False: None}, f)
+        false_node = Node({True: None, False: None}, f)
+        split = f(x)
+        self.__creation_of_tree(true_node, x[split], y[split], count-1)
+        self.__creation_of_tree(true_node, x[np.logical_not(split)], y[np.logical_not(split)], count-1)
+        # true_node.set_next(True, self.__creation_of_tree(true_node, x[f(x)], y[f(x)], count-1))
+        # false_node.set_next(True, self.__creation_of_tree(true_node, x[not f(x)], y[not f(x)], count-1))
+        now_node.set_next(True, true_node)
+        now_node.set_next(False, false_node)
 
 
     def teach(self, X_train: array, y_train: array, colums_spec: iter = ...):
-        self.__cart_tree_classifier.tree = Node({True: None, False: None}, 
-                                                lambda a: self.__function_of_split(a, X_train.T[0].mean()))
-        
-        for i in range(X_train.shape[0]):
-            timed_node = self.__cart_tree_classifier.tree
-            for j in range(X_train[i].shape[0]):
-                if type(timed_node.next(X_train[i][j])) is Node:
-                    print('Node:', timed_node.next(X_train[i][j]), i, j)
-                    timed_node = timed_node.next(X_train[i][j])
-                elif timed_node.next(X_train[i][j]) == None:
-                    print(f'none: y={y_train[i]}, x={X_train[i][j]}, f(x)={self.__function_of_split(X_train[i][j], X_train.T[i].mean())}, i={i}, j={j}')
-                    timed_node.set_next(self.__function_of_split(X_train[i][j], X_train.T[i].mean()), 
-                                        y_train[i]
-                                        if j > X_train[i].shape[0]-2 else 
-                                        Node({True: None, False: None}, lambda a: self.__function_of_split(a, X_train.T[i].mean())))
-                    timed_node = timed_node.next(X_train[i][j])
+        f = lambda a :self.__function_of_split(a, self.__function_of_searching_of_split(X_train, y_train))
+        self.__cart_tree_classifier.tree = Node({True: None, False: None}, f)
+        self.__creation_of_tree(self.__cart_tree_classifier.tree, X_train, y_train, self.__tree_size)
+
                 
