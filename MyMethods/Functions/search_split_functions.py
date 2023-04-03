@@ -3,6 +3,7 @@ from numpy import array, argsort, mean, unique, inf
 
 def search_params_that_equiv_to_majority_class(x: array, y: array, err=0):
     d = (inf, inf, inf)
+    # print('search')
     # print(list(y))
     for i in range(x.T.shape[0]):
         for j in x.T[i]:
