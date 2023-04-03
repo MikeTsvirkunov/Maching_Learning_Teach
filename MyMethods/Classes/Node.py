@@ -14,3 +14,7 @@ class Node(INode):
     def next(self, x: any) -> any:
         return self.__nexts[self.__function_of_next(x)]
 
+    def to_sheet(self, x):
+        self.next = lambda a: x
+
+

@@ -12,10 +12,11 @@ class CartTreeClassifier(IPredictor):
         self.tree = None
 
     def predict(self, x: array) -> array:
-        t = self.tree.next(x[0])
-        print(x.shape[0])
-        for i in range(1, x.shape[0]):
-            t = t.next(x[i])
-            print('->', i, t)
-        return t
+        pred = list()
+        for i in x:
+            t = self.tree
+            while type(t) is Node:
+                t = t.next(i)
+            pred.append(t)
+        return np.array(pred)
 
