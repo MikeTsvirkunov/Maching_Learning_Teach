@@ -2,8 +2,8 @@ from abc import ABC, abstractmethod
 from numpy import array
 
 
-class IContainer(ABC):
+class IBag(ABC):
 
     @abstractmethod
-    def get_data(self, param: any, next: any):
+    def get_bag(self) -> any:
         pass

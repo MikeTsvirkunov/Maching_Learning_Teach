@@ -23,7 +23,7 @@ class CartTreeTeacher(ITeacher):
     def __creation_of_tree(self, x: np.array, y: np.array, count: int):
         p = self.__function_of_searching_of_split(x, y)
         f = lambda a :self.__function_of_split(a, p)
-        if count and p[0]>0:
+        if self.__function_of_appling_stop(count, p[0]):
             split = f(x)
             return Node({True: self.__creation_of_tree(x[split], y[split], count-1), 
                          False: self.__creation_of_tree(x[np.logical_not(split)], y[np.logical_not(split)], count-1)}, f)
