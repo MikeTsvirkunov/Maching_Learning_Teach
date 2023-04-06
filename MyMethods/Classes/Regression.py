@@ -1,7 +1,9 @@
 import numpy as np
 from itertools import chain
+from .Interfaces.IPredictor import IPredictor
 
-class Regression():
+
+class Regression(IPredictor):
     def __init__(self):
         self.weights = list()
     

@@ -18,4 +18,4 @@ class BaggingContainer(IPredictor, IBag):
         d = list()
         for predictor in self.__predictors:
             d.append(predictor.predict(x))
-        return np.array(d)
+        return self.__out_function(np.array(d))
