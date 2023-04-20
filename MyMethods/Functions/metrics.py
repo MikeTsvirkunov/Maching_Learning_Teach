@@ -1,3 +1,6 @@
+import numpy as np
+
+
 def TruePositive(y_predicted, y_test):
     return (y_predicted == 1)[y_test == True].sum()
 
@@ -32,3 +35,7 @@ def recall(y_predicted, y_test):
 
 def f1(y_predicted, y_test):
     return 2 * precision(y_predicted, y_test) * recall(y_predicted, y_test) / (precision(y_predicted, y_test) + recall(y_predicted, y_test))
+
+
+def gini(y: np.array):
+    return 1-sum((np.unique(y, return_counts=True)[1]/y.shape[0])**2)
