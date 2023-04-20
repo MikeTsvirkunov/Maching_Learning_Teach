@@ -9,3 +9,4 @@ spacy
 joblib
 imbalanced-learn
 numdifftools
+scikeras
