@@ -1,0 +1,5 @@
+{
+    "classification_data_preprocessed": "Data\\DataLaba2\\neo_task_moded_norm.csv",
+    "classification_data": "Data\\DataLaba2\\neo_task.csv",
+    "num_of_rows_in_show_table": 10
+}
