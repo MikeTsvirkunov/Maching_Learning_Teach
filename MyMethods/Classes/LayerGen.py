@@ -24,7 +24,7 @@ class LayerGenerator:
     
     def generate(self):
         return [Layer(self.function_of_generation(i, j), 
-                      self.function_of_generation(1, 1)[0], 
+                      self.function_of_generation(j, 1), 
                       summator=s, 
                       dsummator=ds,
                       activation_function=af,
