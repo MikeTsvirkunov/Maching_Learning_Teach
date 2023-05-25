@@ -9,8 +9,11 @@ class Perceptron(IPredictor):
         self.layers = layers_of_weights
     
     def predict(self, x: array) -> array:
-        A = x
+        A = x.reshape(1, x.shape[0])
         for layer in self.layers:
-            # print('A, res:\t', A, layer.get_output(A[-1]))
-            A = layer.get_output(A)
+            s = layer.get_sumation(A)
+            # print(s)
+            # print()
+            A = layer.activation_function(s)
+            A = A.reshape(1, A.shape[0])
         return A

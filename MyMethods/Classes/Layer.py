@@ -26,21 +26,23 @@ class Layer:
     #         out = np.append(out, self.dactivation_function(s))
     #     return out
 
-    # def get_sums(self, x):
-    #     self.summator(self.__weights, x, self.__dias)
+    def get_sumation(self, x):
+        return self.summator(self.__weights, x, self.__dias)
+    
+    def get_dsumation(self, x):
+        return self.dsummator(self.__weights, x, self.__dias)
 
-
-    # def get_dias(self):
-    #     return self.__dias
+    def get_dias(self):
+        return self.__dias
     
-    # def get_weights(self):
-    #     return self.__weights
+    def get_weights(self):
+        return self.__weights
     
-    # def set_dias(self, dias: np.ndarray):
-    #     self.__dias = dias
+    def set_dias(self, dias: np.ndarray):
+        self.__dias = dias
     
-    # def set_weights(self, weights: np.ndarray):
-    #     self.__weights = weights
+    def set_weights(self, weights: np.ndarray):
+        self.__weights = weights
 
     
     
