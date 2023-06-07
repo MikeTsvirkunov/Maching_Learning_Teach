@@ -4,45 +4,28 @@ import numpy as np
 class Layer:
     def __init__(self, 
                  weights: np.ndarray, 
-                 dias: np.array,
-                 summator: callable,
-                 dsummator: callable,
-                 activation_function: callable, 
+                 diases: np.array,
+                 activation_function: callable,
                  dactivation_function: callable) -> None:
         self.__weights = weights
-        self.__dias = dias
-        self.summator = summator
-        self.dsummator = dsummator
+        self.__diases = diases
         self.activation_function = activation_function
         self.dactivation_function = dactivation_function
-    
-    # def get_output(self, x: np.array):
-    #     return self.activation_function(self.summator)
-    
-    # def get_doutput(self, x: np.array):
-    #     out = np.array([])
-    #     for w in self.__weights:
-    #         s = self.summator(w, x, self.__dias)
-    #         out = np.append(out, self.dactivation_function(s))
-    #     return out
-
-    def get_sumation(self, x):
-        return self.summator(self.__weights, x, self.__dias)
-    
-    def get_dsumation(self, x):
-        return self.dsummator(self.__weights, x, self.__dias)
 
     def get_dias(self):
-        return self.__dias
+        return np.array(self.__diases, copy=True)
     
     def get_weights(self):
-        return self.__weights
+        return np.array(self.__weights, copy=True)
     
-    def set_dias(self, dias: np.ndarray):
-        self.__dias = dias
+    def set_dias(self, diases: np.ndarray):
+        self.__diases = np.array(diases, copy=True)
     
     def set_weights(self, weights: np.ndarray):
-        self.__weights = weights
+        self.__weights = np.array(weights, copy=True)
 
+    def get_activation_function(self):
+        return self.activation_function
     
-    
+    def get_dactivation_function(self):
+        return self.dactivation_function

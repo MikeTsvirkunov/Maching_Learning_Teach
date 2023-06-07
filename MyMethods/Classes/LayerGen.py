@@ -7,18 +7,14 @@ class LayerGenerator:
                  sizes_of_input_layer: int,
                  sizes_of_hidden_layers: iter,
                  sizes_of_output_layer: int,
-                 summators: iter,
                  activation_functions: iter,
-                 dsummators: iter,
                  dactivation_functions: iter,
                  function_of_generation: callable) -> None:
         self.sizes_of_input_layer = sizes_of_input_layer
         self.sizes_of_output_layer = sizes_of_output_layer
         self.sizes_of_hidden_layers = sizes_of_hidden_layers
         self.function_of_generation = function_of_generation
-        self.summators = summators
         self.activation_functions = activation_functions
-        self.dsummators = dsummators
         self.dactivation_functions = dactivation_functions
 
     
@@ -32,7 +28,5 @@ class LayerGenerator:
                        [self.sizes_of_input_layer, 
                         *self.sizes_of_hidden_layers], 
                         self.activation_functions, 
-                        self.dactivation_functions, 
-                        self.summators, 
-                        self.dsummators)]
+                        self.dactivation_functions)]
         
