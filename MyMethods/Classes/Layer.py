@@ -12,13 +12,13 @@ class Layer:
         self.activation_function = activation_function
         self.dactivation_function = dactivation_function
 
-    def get_dias(self):
+    def get_diases(self):
         return np.array(self.__diases, copy=True)
     
     def get_weights(self):
         return np.array(self.__weights, copy=True)
     
-    def set_dias(self, diases: np.ndarray):
+    def set_diases(self, diases: np.ndarray):
         self.__diases = np.array(diases, copy=True)
     
     def set_weights(self, weights: np.ndarray):

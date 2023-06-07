@@ -20,11 +20,9 @@ class LayerGenerator:
     
     def generate(self):
         return [Layer(self.function_of_generation(i, j), 
-                      self.function_of_generation(1, i), 
-                      summator=s, 
-                      dsummator=ds,
+                      self.function_of_generation(1, i),
                       activation_function=af,
-                      dactivation_function=daf) for i, j, af, daf, s, ds in zip([*self.sizes_of_hidden_layers, self.sizes_of_output_layer],
+                      dactivation_function=daf) for i, j, af, daf in zip([*self.sizes_of_hidden_layers, self.sizes_of_output_layer],
                        [self.sizes_of_input_layer, 
                         *self.sizes_of_hidden_layers], 
                         self.activation_functions, 
