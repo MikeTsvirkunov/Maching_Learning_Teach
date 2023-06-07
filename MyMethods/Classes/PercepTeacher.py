@@ -42,7 +42,7 @@ class PerceptronTeacher(ITeacher):
             S.append(layer.get_sumation(A[-1]))
             # print('S: ', S[-1].shape, S[-1].tolist())
             A.append(layer.activation_function(S[-1]))
-            A[-1] = A[-1].reshape(1, A[-1].shape[0])
+            A[-1] = A[-1].reshape(1, A[-1].shape[1])
         return A, S
 
     def teach(self, X_train: array, y_train: array, colums_spec: iter = ...):
@@ -67,7 +67,7 @@ class PerceptronTeacher(ITeacher):
                         print('W: ', l.get_weights().shape, l.get_weights().tolist())
                         print('B: ', l.get_dias().shape, l.get_dias().tolist())
                         print('\nres')
-                        print('1) ', d_output.dot(df).shape, d_output.dot(df).tolist())
+                        print('1) ', d_output.dot(df.T).shape, d_output.dot(df.T).tolist())
                         print('2.1) ', l.get_dsumation(a)[0].shape, l.get_dsumation(a)[0].tolist())
                         print('2.2) ', l.get_dsumation(a)[1].shape, l.get_dsumation(a)[1].tolist())
                     #     # print('\tnow d_output: ', d_output.tolist(), d_output.shape)
@@ -75,12 +75,12 @@ class PerceptronTeacher(ITeacher):
                     #     print('prev_d_output: ', d_output.tolist(), d_output.shape)
                     #     # print(l.get_doutput((ap.reshape(ap.shape[0], 1))).shape)
                         # d_output = d_output.dot(df)
-                        d_output = d_output.dot(df)
+                        d_output = d_output.dot(df.T)
                         db = d_output.dot(l.get_dsumation(a)[1])
                         d_output = d_output.dot(l.get_dsumation(a)[0])
                         # print('3) ', d_output.shape, d_output.tolist())
 
-                        # print('db: ', db.shape, db.tolist())
+                        print('db: ', db.shape, db.tolist())
                     #     d_output = d_output.T.dot(df.reshape(df.shape[0], 1).T)
                     #     res = d_output.T.dot(a.reshape(a.shape[0], 1).T)
                     #     # d_dias = d_output * df
@@ -97,7 +97,7 @@ class PerceptronTeacher(ITeacher):
                         # print('='*40)
                         # l.set_weights(l.get_weights() - (self.__step * d_output) / (l.get_weights().shape[0] * l.get_weights().shape[1]))
                         # print('b', l.get_dias(), self.__step * d_output)
-                        l.set_dias(l.get_dias() - self.__step * db.T / (l.get_dias().shape[0] * l.get_dias().shape[1]))
+                        l.set_dias(l.get_dias() - self.__step * db / (l.get_dias().shape[0] * l.get_dias().shape[1]))
                         print('='*40)
         return self.__layers
     
