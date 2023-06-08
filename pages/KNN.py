@@ -6,6 +6,7 @@ import numpy as np
 from json import load
 import pandas as pd
 import pickle
+import joblib
 from sys import path
 path.append("MyMethods")
 
@@ -14,6 +15,8 @@ with open('vars.json') as f:
 df = pd.read_csv(glob_vars['classification_data'])
 with open(glob_vars['KNN'], 'rb') as handle:
     knn = pickle.load(handle)
+with open(glob_vars['Scaler'], 'rb') as handle:
+    scaler = joblib.load(handle)
 
 st.set_page_config(page_title="Plotting Demo", page_icon="📈")
 st.header('KNN')
@@ -46,8 +49,11 @@ with tab3:
         bytes_data = uploaded_file.getvalue()
         dataframe = pd.read_csv(uploaded_file, sep=',', index_col=None)
         st.session_state['input_df'] = dataframe
-        pred_data = dataframe[[c for c in dataframe.columns if c in df.columns.to_list()]]#.to_numpy()
-        st.session_state['res'] = knn.predict(pred_data.to_numpy())
+        data_cleared = dataframe[[c for c in dataframe.columns if c in df.columns.to_list()]].dropna()
+        print(data_cleared)
+        data_scaled = scaler.transform(data_cleared)
+        data_scaled = pd.DataFrame(data_scaled, columns=data_cleared.columns)
+        st.session_state['res'] = knn.predict(data_scaled.to_numpy())
         modal_multiply.open()
 
 
@@ -67,8 +73,8 @@ if modal_multiply.is_open():
         st.dataframe(st.session_state['input_df'])
         st.download_button(
             label="Download data as CSV",
-            data=pd.DataFrame(data=st.session_state['res'], columns=['hazardous']).to_csv().encode('utf-8'),
-            file_name='large_df.csv',
+            data=pd.DataFrame(data=st.session_state['res'], columns=['hazardous']).to_csv(index=False).encode('utf-8'),
+            file_name='predict.csv',
             mime='text/csv',
         )
 
