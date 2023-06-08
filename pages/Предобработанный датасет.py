@@ -28,7 +28,6 @@ step_back, page_numeration, step_front = st.columns(3)
 # step_back.button("Prev")
 
 if step_front.button("Next"):
-    print(st.session_state.count)
     increment_counter(n_rows)
     n = st.session_state.count
     table.table(df[n:n+n_rows])
