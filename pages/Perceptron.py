@@ -13,25 +13,26 @@ path.append("MyMethods")
 with open('vars.json') as f:
     glob_vars = load(f)
 df = pd.read_csv(glob_vars['classification_data_preprocessed'], index_col=None)
-
-with open(glob_vars['GB'], 'rb') as handle:
-    predictor = pickle.load(handle)
+with open(glob_vars['Perceptron'], 'rb') as handle:
+    predictor = joblib.load(handle)
 with open(glob_vars['Scaler'], 'rb') as handle:
     scaler = joblib.load(handle)
 
-st.set_page_config(page_title="Plotting Demo", page_icon="📈")
-st.header('NBC')
-tab1, tab2, tab3 = st.tabs(["Ограниченное предсказание", "Не ограниченное предсказание", "Множественное предсказание"])
+st.set_page_config(page_title="Perceptron", page_icon="🕸")
+st.header('Perceptron')
+tab1, tab2, tab3 = st.tabs(["Ограниченное предсказание",
+                           "Не ограниченное предсказание", "Множественное предсказание"])
 modal_one = Modal("Результат:", key='streamlit-modal-default')
 modal_multiply = Modal("Результаты:", key='streamlit-modal-default1')
 
 with tab1:
     st.session_state['params_save'] = dict()
     for c in df.drop(glob_vars['predict_attribute'], axis=1).columns:
-        st.session_state['params_save'][c] = st.slider(c, float(df[c].min())*glob_vars['authenticity'], 
+        st.session_state['params_save'][c] = st.slider(c, float(df[c].min())*glob_vars['authenticity'],
                                                        float(df[c].max())*glob_vars['authenticity'], 0.01)
     if st.button('Безопасное предсказание'):
-        st.session_state['res'] = predictor.predict(np.array([list(st.session_state['params_save'].values())]))
+        st.session_state['res'] = predictor.predict(
+            np.array([list(st.session_state['params_save'].values())]))
         modal_one.open()
 
 
@@ -40,7 +41,8 @@ with tab2:
     for c in df.drop(glob_vars['predict_attribute'], axis=1).columns:
         st.session_state['params_unsave'][c] = st.number_input(c)
     if st.button('Неограниченное предсказание'):
-        st.session_state['res'] = predictor.predict(np.array([list(st.session_state['params_unsave'].values())]))
+        st.session_state['res'] = predictor.predict(
+            np.array([list(st.session_state['params_unsave'].values())]))
         modal_one.open()
 
 with tab3:
@@ -50,7 +52,8 @@ with tab3:
         bytes_data = uploaded_file.getvalue()
         dataframe = pd.read_csv(uploaded_file, sep=',', index_col=None)
         st.session_state['input_df'] = dataframe
-        data_cleared = dataframe[[c for c in dataframe.columns if c in df.columns.to_list()]].dropna()
+        data_cleared = dataframe[[
+            c for c in dataframe.columns if c in df.columns.to_list()]].dropna()
         data_scaled = scaler.transform(data_cleared)
         data_scaled = pd.DataFrame(data_scaled, columns=data_cleared.columns)
         st.session_state['res'] = predictor.predict(data_scaled.to_numpy())
@@ -59,7 +62,7 @@ with tab3:
 
 if modal_one.is_open():
     with modal_one.container():
-        html_string = glob_vars['predict_results_decorated'][str(int(st.session_state['res'][0]))] + '''
+        html_string = glob_vars['predict_results_decorated'][str(int(st.session_state['res'][0] > 0.5))] + '''
         <script language="javascript">
           document.querySelector("h1").style.fontFamily = "Impact,Charcoal,sans-serif";
         </script>
@@ -69,12 +72,13 @@ if modal_one.is_open():
 
 if modal_multiply.is_open():
     with modal_multiply.container():
-        st.session_state['input_df'][glob_vars['predict_attribute']] = [glob_vars['predict_results'][str(int(i))] for i in st.session_state['res']]
+        st.session_state['input_df'][glob_vars['predict_attribute']] = [
+            glob_vars['predict_results'][str(int(i > 0.5))] for i in st.session_state['res']]
         st.dataframe(st.session_state['input_df'])
         st.download_button(
             label="Download data as CSV",
-            data=pd.DataFrame(data=st.session_state['res'], columns=['hazardous']).to_csv().encode('utf-8'),
+            data=pd.DataFrame(data=st.session_state['res'], columns=[
+                              'hazardous']).to_csv().encode('utf-8'),
             file_name='predict.csv',
             mime='text/csv',
         )
-

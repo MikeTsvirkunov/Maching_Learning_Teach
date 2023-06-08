@@ -1,11 +1,13 @@
 {
-    "classification_data_preprocessed": "Data\\DataLaba2\\neo_task_moded_norm.csv",
+    "classification_data_preprocessed": "Streamlit\\Data\\data_for_train.csv",
     "classification_data": "Data\\DataLaba2\\neo_task.csv",
     "num_of_rows_in_show_table": 10,
     "predict_attribute": "hazardous",
     "authenticity": 100,
     "KNN": "Streamlit\\Models\\KNN.pickle",
     "GB": "Streamlit\\Models\\KNN.pickle",
+    "Perceptron": "Streamlit\\Models\\Perceptron.sav",
+    "CartTree": "Streamlit\\Models\\CartTree.sav",
     "Scaler": "Streamlit\\Models\\MinMaxScaler.sav",
     "predict_results_decorated": {"1": "<h2 style=\"color: red;\">Is hazardous<h2>", "0": "<h2  style=\"color: green;\">Not hazardous<h2>"},
     "predict_results": {"1": "Is hazardous", "0": "Not hazardous"}
