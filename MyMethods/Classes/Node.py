@@ -8,6 +8,9 @@ class Node(INode):
         self.__nexts = nexts
         self.__function_of_next = function_of_next
     
+    def get_all(self):
+        return self.__nexts
+
     def set_next(self, param: any, next: any):
         self.__nexts[param] = next
 
