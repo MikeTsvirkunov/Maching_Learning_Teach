@@ -19,7 +19,7 @@ with open(glob_vars['Scaler'], 'rb') as handle:
     scaler = joblib.load(handle)
 
 st.set_page_config(page_title="Plotting Demo", page_icon="📈")
-st.header('KNN')
+st.header('CartTree')
 tab1, tab2, tab3 = st.tabs(["Ограниченное предсказание",
                            "Не ограниченное предсказание", "Множественное предсказание"])
 modal_one = Modal("Результат:", key='streamlit-modal-default')
